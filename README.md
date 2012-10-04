@@ -1,4 +1,4 @@
 animo
 =====
 
-javascript framework for animations
+Javascript animation framework
