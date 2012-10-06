@@ -1,16 +1,16 @@
-describe("animo > ", function() {
+describe("ease > ", function() {
 
-    it("should have animo loaded", function() {
+    it("should have ease loaded", function() {
         run(function(done) {
-            expect(typeof animo != "undefined").toBe(true);
-            animo.mode = "development";
+            expect(typeof ease != "undefined").toBe(true);
+            ease.mode = "development";
             done();
         });
     });
 
     it("should have ease methods defined", function() {
         run(function(done) {
-            expect(typeof animo.ease != "undefined").toBe(true);
+            expect(typeof ease != "undefined").toBe(true);
             done();
         });
     });
@@ -25,7 +25,7 @@ describe("animo > ", function() {
                     steps: 19,
                     method: methods[i]
                 };
-                var values = animo.ease.calculate(options);    
+                var values = ease.calculate(options);    
                 expect(values != null).toBe(true);
                 if(values != null) {
                     expect(values.length == options.steps).toBe(true);
