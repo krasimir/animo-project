@@ -1,4 +1,4 @@
-easejs
+animo
 =====
 
-Robert Pener's easing functions for javascript
+Small JavaScript library for CSS3 animations
