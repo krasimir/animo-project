@@ -9,8 +9,9 @@ animo = (function() {
 
     var Animation = function(selector) {
 
-        // verifing the element
         var element = null;
+
+        // verifing the element
         if(typeof selector == "undefined" || selector == null) throw new Error("Missing element!");
         if(typeof selector == "string") {
             if(typeof $ != "undefined") {
@@ -60,6 +61,27 @@ animo = (function() {
             setStyle("transition-timing-function:" + translateEase(animation.ease || defaultEaseMethod));
             setStyle("transition-delay:" + (animation.wait ? wait + "ms" : 0));
             setStyle(animation.css);
+
+            // transform shortcuts            
+            var transforms = "";
+            var transformShortcuts = {
+                move: "translate",
+                scale: "scale",
+                rotate: "rotate",
+                rotateX: "rotateX",
+                rotateY: "rotateY",
+                rotateZ: "rotateZ",
+                skew: "skew"
+            };
+            for(var prop in animation) {
+                var shortcut = transformShortcuts[prop];
+                if(typeof shortcut != "undefined") {
+                    transforms += shortcut + "(" + animation[prop] + ") ";
+                }
+            }
+            if(transforms != "") {
+                setStyle("transform", transforms);
+            }
 
             var css = "";
             var vendors = ["-ms-", "-moz-", "-webkit-", "-o-"];
