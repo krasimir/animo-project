@@ -1,5 +1,13 @@
 animo = function(element) {
 
+    // jquery fixture
+    if(typeof $ != "undefined" && element instanceof $) {
+        if(element.length == 0) {
+            throw new Error("Wrong selector!"); return;
+        }
+        element = element.get(0);
+    }
+
     var self = this;
     var styles = {};
     var animations = {};

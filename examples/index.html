@@ -14,7 +14,23 @@
         <link rel="stylesheet" href="./css/bootstrap.min.css" />
         <link rel="stylesheet" href="./css/styles.css" />
 
+        <script src="./js/jquery.js"></script>
         <script src="../src/animo.js"></script>
+        <script>
+            window.onload = function() {
+                animo($("#demo"))
+                .create("animation1", {
+                    start:"padding: 20px",
+                    end: "  background: #A36060; width :540px; color: #FFF;"
+                })
+                .create("animation2", {
+                    end: "font-size: 30px; transform: scale(1.4, 1.4); opacity: 0.5;",
+                    duration: "500ms"
+                })
+                .run("animation1", 500)
+                .run("animation2", 1000);
+            }
+        </script>
         
     </head>
 <body>
@@ -24,6 +40,5 @@
         <hr />
         <div id="demo">simple text</div>
     </div>
-    <script src="./js/script.js"></script>
 </body>
 </html>

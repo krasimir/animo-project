@@ -1,4 +1,4 @@
-animo
+easejs
 =====
 
-Javascript animation framework
+Robert Pener's easing functions for javascript
