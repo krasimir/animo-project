@@ -9,7 +9,7 @@
         <meta name="keywords" content="animo - javascript animation framework" lang="en-us" />
         <meta name="description" content="animo - javascript animation framework" />
         
-        <title>animo - javascript animation framework</title>
+        <title>animo - css3 animations</title>
 
         <link rel="stylesheet" href="./css/bootstrap.min.css" />
         <link rel="stylesheet" href="./css/styles.css" />
@@ -18,17 +18,26 @@
         <script src="../src/animo.js"></script>
         <script>
             window.onload = function() {
-                animo($("#demo"))
+
+                animo   
                 .create("animation1", {
-                    start:"padding: 20px",
-                    end: "  background: #A36060; width :540px; color: #FFF;"
+                    css: "  background-color: #A36060; width :340px;",
+                    duration: 200
                 })
                 .create("animation2", {
-                    end: "font-size: 30px; transform: scale(1.4, 1.4); opacity: 0.5;",
-                    duration: "500ms"
+                    css: "background-color: #999; width :200px",
+                    duration: 500,
+                    ease: "ease-in-out-back"
                 })
-                .run("animation1", 500)
-                .run("animation2", 1000);
+
+                $("#demo").mouseover(function() {
+                    animo.apply("#demo", "animation1");
+                });
+
+                $("#demo").mouseout(function() {
+                    animo.apply("#demo", "animation2");
+                });
+
             }
         </script>
         
@@ -38,7 +47,7 @@
         <h1>animo</h1>
         <h4>JavaScript Animation Framework</h4>
         <hr />
-        <div id="demo">simple text</div>
+        <a href="#" id="demo">simple text</a>
     </div>
 </body>
 </html>

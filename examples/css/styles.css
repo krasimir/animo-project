@@ -1,3 +1,7 @@
 #demo {
     width: 200px;
+    display: block;
+    padding: 10px;
+    background: #999;
+    color: #FFF;
 }
