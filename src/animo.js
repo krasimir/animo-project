@@ -1,10 +1,10 @@
 animo = function(element) {
 
     var self = this;
-    var defaultDuration  = "transition: 1000ms;-moz-transition: 1000ms;-webkit-transition: 1000ms;-o-transition: 1000ms;";
     var styles = {};
     var animations = {};
     var api = {};
+    var defaultDuration = "1000ms";
 
     if(typeof element == "undefined" || element == null) throw new Error("Missing element!");
 
@@ -29,40 +29,60 @@ animo = function(element) {
 
         var css = "";
         for(var i in styles) {
-            css += i + ":" + styles[i] + ";";
+            css += composeCSSText(i, styles[i]);
         }
 
         element.setAttribute("style", css);
         element.style.cssText = css;
 
     };
-    var setDuration = function(value) {
-        var css = "transition:" + value + ";";
-        css += "-moz-transition:" + value + ";";
-        css += "-webkit-transition:" + value + ";";
-        css += "-o-transition:" + value + ";";
-        setStyle(css);
-    };
+    var composeCSSText = function(prop, value) {
+        var vendors = ["-ms-", "-moz-", "-webkit-", "-o-"];
+        var special = {
+            "transition": true, 
+            "transition-property": true, 
+            "transition-duration": true, 
+            "transition-timing-function": true, 
+            "transition-delay": true, 
+            "transform": true,
+            "transform-origin": true,
+            "transform-style": true
+        };
+        var css = "";
+        if(special[prop]) {
+            css += prop + ":" + value + ";";
+            for(var i=0; i<vendors.length; i++) {
+                css += vendors[i] + prop + ":" + value + ";";
+            }
+        } else {
+            css += prop + ":" + value + ";";
+        }
+        return css;
+    }
     var create = function(name, props) {
         animations[name] = props;
         return api;
     };
     var run = function(name, wait) {
-
         var animation = animations[name];
         if(!animation) throw new Error("Missing animation with name '" + name + "'!");
         if(animation.start) setStyle(animation.start);
-        setTimeout(function() {
-            setDuration(animation.duration || defaultDuration);
-            if(animation.end) setStyle(animation.end);    
-        }, wait || 1);
-
+        if(wait) {
+            setTimeout(function() {
+                setStyle("transition:" + (animation.duration || defaultDuration))
+                if(animation.end) setStyle(animation.end);    
+            }, wait);
+        } else {
+            setStyle("transition:" + (animation.duration || defaultDuration))
+            if(animation.end) setStyle(animation.end); 
+        }
         return api;
     };
 
     setStyle(element.style.cssText || element.getAttribute("style"));
 
     return api = {
+        setStyle: setStyle,
         create: create,
         run: run
     }   
