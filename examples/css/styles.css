@@ -1,7 +1,11 @@
-#demo {
-    width: 200px;
+.demo-nav li a {
+    width: 150px;
     display: block;
     padding: 10px;
     background: #999;
     color: #FFF;
+    border-bottom: dotted 1px #000;
+}
+.demo-nav li a:hover {
+    background: #999;
 }

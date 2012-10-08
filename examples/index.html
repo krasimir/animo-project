@@ -13,33 +13,33 @@
 
         <link rel="stylesheet" href="./css/bootstrap.min.css" />
         <link rel="stylesheet" href="./css/styles.css" />
+        <link rel="stylesheet" href="./css/prettify.css" />
 
         <script src="./js/jquery.js"></script>
+        <script src="./js/prettify.js"></script>
         <script src="../src/animo.js"></script>
         <script>
             window.onload = function() {
 
-                animo   
-                .create("animation1", {
-                    css: "  background-color: #A36060; width :340px;",
-                    duration: 200,
-                    move: "20px, 20px",
-                    scale: "1.5, 1.5",
-                    rotateY: "180deg",
-                    skew: "10deg, 10deg"
+                prettyPrint();
+
+                animo
+                .create("over", {
+                    css: "background-color: #A36060; width: 250px; box-shadow: 5px -5px 10px 1px #000;",
+                    duration: 300
                 })
-                .create("animation2", {
-                    css: "background-color: #999; width :200px",
+                .create("out", {
+                    css: "background-color: #999; width: 150px; box-shadow: none;",
                     duration: 500,
-                    ease: "ease-in-out-back"
+                    ease: "ease-out-back"
                 })
 
-                $("#demo").mouseover(function() {
-                    animo.apply("#demo", "animation1");
-                });
-
-                $("#demo").mouseout(function() {
-                    animo.apply("#demo", "animation2");
+                $(".demo-nav > li > a")
+                .mouseover(function() {
+                    animo.play(this, "over");
+                })
+                .mouseout(function() {
+                    animo.play(this, "out");
                 });
 
             }
@@ -51,7 +51,39 @@
         <h1>animo</h1>
         <h4>JavaScript Animation Framework</h4>
         <hr />
-        <a href="#" id="demo">simple text</a>
+        <div class="row">
+            <div class="span8">
+<pre class="prettyprint">
+animo
+.create("over", {
+    css: "background-color: #A36060; width: 250px; box-shadow: 5px -5px 10px 1px #000;",
+    duration: 300
+})
+.create("out", {
+    css: "background-color: #999; width: 150px; box-shadow: none;",
+    duration: 500,
+    ease: "ease-out-back"
+})
+
+$(".demo-nav > li > a")
+.mouseover(function() {
+    animo.play(this, "over");
+})
+.mouseout(function() {
+    animo.play(this, "out");
+});
+</pre> 
+            </div>
+            <div class="span4">
+                <ul class="nav demo-nav">
+                    <li><a href="#">Lorem ipsum dolor</a></li>
+                    <li><a href="#">Sit amet</a></li>
+                    <li><a href="#">Consectetuer</a></li>
+                    <li><a href="#">Adipiscing elit</a></li>
+                    <li><a href="#">Sed diam</a></li>
+                </ul>                
+            </div>
+        </div>
     </div>
 </body>
 </html>

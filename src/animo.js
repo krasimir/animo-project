@@ -2,34 +2,12 @@ animo = (function() {
 
     var styles = {};
     var animations = {};
-    var animated = {};
+    var animated = [];
     var api = {};
     var defaultDuration = "1000ms";
     var defaultEaseMethod = "ease-out-quad";
 
-    var Animation = function(selector) {
-
-        var element = null;
-
-        // verifing the element
-        if(typeof selector == "undefined" || selector == null) throw new Error("Missing element!");
-        if(typeof selector == "string") {
-            if(typeof $ != "undefined") {
-                element = $(selector);
-                if(element.length == 0) {
-                    throw new Error("Wrong selector!");
-                    return;
-                }
-                element = $(selector).get(0);
-            } else {
-                element = document.getElementById(selector) || document.querySelectorAll(selector)[0];
-                if(typeof element == "undefined") {
-                    throw new Error("Wrong selector!");
-                }
-            }  
-        } else {
-            throw new Error("Missing selector!");
-        }
+    var AnimationController = function(element) {
 
         // set css text
         var setStyle = function() {
@@ -56,10 +34,13 @@ animo = (function() {
         // apply css
         var run = function(animation) {
 
+            styles = {};
+            
+            var duration = (animation.duration ? animation.duration + "ms" : defaultDuration);
+            var timingFunction = translateEase(animation.ease || defaultEaseMethod);
+
             setStyle(element.style.cssText || element.getAttribute("style"));
-            setStyle("transition:" + (animation.duration ? animation.duration + "ms" : defaultDuration));
-            setStyle("transition-timing-function:" + translateEase(animation.ease || defaultEaseMethod));
-            setStyle("transition-delay:" + (animation.wait ? wait + "ms" : 0));
+            setStyle("transition: all " + duration + " " + timingFunction);
             setStyle(animation.css);
 
             // transform shortcuts            
@@ -150,24 +131,67 @@ animo = (function() {
 
     }
 
+    // verify the element
+    var verifyElement = function(selector) {
+        var element = null;
+        if(typeof selector == "undefined" || selector == null) throw new Error("Missing element!");        
+        if(typeof selector == "string") {
+            if(typeof $ != "undefined") {
+                element = $(selector);
+                if(element.length == 0) {
+                    throw new Error("Wrong selector!");
+                    return;
+                }
+                element = $(selector).get(0);
+            } else {
+                element = document.getElementById(selector) || document.querySelectorAll(selector)[0];
+                if(typeof element == "undefined") {
+                    throw new Error("Wrong selector!");
+                }
+            }  
+        } else if(typeof selector == "object") {
+            if(typeof $ != "undefined" && selector instanceof $) {
+                element = selector.get(0);
+            } else {
+                element = selector;
+            }
+        } else {
+            throw new Error("Missing selector!");
+        }
+        return element;
+    }
+
     // creating animation
     var create = function(name, props) {
         animations[name] = props;
         return api;
     };
 
-    // apply animations
-    var apply = function(selector, name) {
+    // play animations
+    var play = function(selector, name) {
+
+        var element = verifyElement(selector);
         var animation = animations[name];
+
         if(!animation) {
             throw new Error("Missing animation with name '" + name + "'!");
             return;
         }
-        if(!animated[selector]) {
-            animated[selector] = new Animation(selector);
+
+        if(element) {
+            for(var i=0; i<animated.length; i++){
+                if(animated[i].element == element) {
+                    animated[i].controller.run(animation);
+                    return api;
+                }
+            }
+            var controller = new AnimationController(element);
+            controller.run(animation);
+            animated.push({ element: element, controller: controller});   
         }
-        animated[selector].run(animation);
+
         return api;
+
     };
 
     // return current created animations
@@ -177,7 +201,7 @@ animo = (function() {
 
     return api = {
         create: create,
-        apply: apply,
+        play: play,
         getAnimations: getAnimations
     }
 
