@@ -1,6 +1,5 @@
 animo = (function() {
 
-    var styles = {};
     var animations = {};
     var animated = [];
     var api = {};
@@ -8,6 +7,8 @@ animo = (function() {
     var defaultEaseMethod = "ease-out-quad";
 
     var AnimationController = function(element) {
+
+        var styles = {};
 
         // set css text
         var setStyle = function() {
@@ -39,7 +40,7 @@ animo = (function() {
             var duration = (animation.duration ? animation.duration + "ms" : defaultDuration);
             var timingFunction = translateEase(animation.ease || defaultEaseMethod);
 
-            setStyle(element.style.cssText || element.getAttribute("style"));
+            // setStyle(element.style.cssText || element.getAttribute("style"));
             setStyle("transition: all " + duration + " " + timingFunction);
             setStyle(animation.css);
 
@@ -59,7 +60,7 @@ animo = (function() {
                 if(typeof shortcut != "undefined") {
                     transforms += shortcut + "(" + animation[prop] + ") ";
                 }
-            }
+            }            
             if(transforms != "") {
                 setStyle("transform", transforms);
             }
@@ -83,7 +84,7 @@ animo = (function() {
                     css += prop + ":" + value + ";";
                 }
             }
-
+            
             element.setAttribute("style", css);
             element.style.cssText = css;
 

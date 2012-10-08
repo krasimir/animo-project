@@ -25,13 +25,17 @@
 
                 animo
                 .create("over", {
-                    css: "background-color: #A36060; width: 250px; box-shadow: 5px -5px 10px 1px #000;",
-                    duration: 300
+                    css: "background-color: #64E0FF; color: #000; box-shadow: 5px -5px 10px 1px #000; border-top: solid 4px #C3C3C3; border-right: solid 4px #989898",
+                    duration: 300,
+                    scale: "1.1,1.1",
+                    move: "5px,-2px"
                 })
                 .create("out", {
-                    css: "background-color: #999; width: 150px; box-shadow: none;",
+                    css: "background-color: #DADADA; color: #676767; box-shadow: none; border-top: none; border-right: none;",
                     duration: 500,
-                    ease: "ease-out-back"
+                    ease: "ease-out-back",
+                    scale: "1,1",
+                    move: "0px,0px"
                 })
 
                 $(".demo-nav > li > a")
@@ -56,13 +60,17 @@
 <pre class="prettyprint">
 animo
 .create("over", {
-    css: "background-color: #A36060; width: 250px; box-shadow: 5px -5px 10px 1px #000;",
-    duration: 300
+    css: "background-color: #64E0FF; color: #000; box-shadow: 5px -5px 10px 1px #000; border-top: solid 4px #C3C3C3; border-right: solid 4px #989898",
+    duration: 300,
+    scale: "1.1,1.1",
+    move: "5px,-2px"
 })
 .create("out", {
-    css: "background-color: #999; width: 150px; box-shadow: none;",
+    css: "background-color: #DADADA; color: #676767; box-shadow: none; border-top: none; border-right: none;",
     duration: 500,
-    ease: "ease-out-back"
+    ease: "ease-out-back",
+    scale: "1,1",
+    move: "0px,0px"
 })
 
 $(".demo-nav > li > a")
