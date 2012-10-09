@@ -12,9 +12,13 @@ Include **animo.js** in your page.
 Create animation template:
 
     animo.create("over", {
-        css: "background-color: #A36060; width: 250px; box-shadow: 5px -5px 10px 1px #000;",
-        duration: 300,
-        ease: "ease-out-back"
+        "box-shadow": "0px 0px 20px #5C5C5C",
+        duration: 400,
+        scale: "1.1, 1.1",
+        ease: "ease-out-back",
+        rotate: "3deg",
+        color: "#FF0",
+        background: "#000"
     })
 
 Play the animation
