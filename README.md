@@ -3,33 +3,55 @@
 
 *** 
 
-##### Usage
+#### Usage
 
-Include **animo.js** in your page.
+##### Include **animo.js** in your page.
 
     <script src="../src/animo.js"></script>
 
-Create animation template:
+###### Create animation template:
 
-    animo.create("over", {
-        "box-shadow": "0px 0px 20px #5C5C5C",
-        duration: 400,
-        scale: "1.1, 1.1",
-        ease: "ease-out-back",
-        rotate: "3deg",
-        color: "#FF0",
-        background: "#000"
-    })
+    animo.create(<name>, <properties>)
 
-Play the animation
+**name:** string
+
+**properties:**
+
+- any valid css property (example: {border: "solid 1px #000", color: "#F00"})
+- duration (example: {duration: "1500ms"})
+- scale (example: {scale: "1.2, 1.2"})
+- rotate (example: {rotate: "120deg"})
+- translate (example: {rotate: "100px, 200px"})
+- skew (example: {skew: "10deg, 60deg"})
+- ease (example: {ease: "cubic-bezier(0,1.23,.87,.02)"})
+- bind (example: {bind: {to: ".mainmenu > a", on: "onmouseover"})
+
+
+###### Play the animation
+
+    animo.play(<properties>);
+
+**properties:**
+
+- element - string selector, jQuery object or DOM object
+- animation - name of created animation
+- on - if set the animation will be executed as a handler of provided event (example: {on: "onmouseover"})
+
+    $(".demo-nav > li > a").mouseover(function() {
+        animo.play({
+            element: this,
+            animation: "over"
+        });
+    });
 
     animo.play({
-        element: $(".main-menu-link"),
+        element: ".demo-nav > li > a",
         animation: "over",
         on: "onmouseover"
     });
+    
 
-##### Inspired by
+###### Inspired by
 - [https://github.com/visionmedia/move.js](https://github.com/visionmedia/move.js)
 - [https://github.com/daneden/animate.css](https://github.com/daneden/animate.css)
 - [http://hakim.se/](http://hakim.se/)
