@@ -3,13 +3,11 @@
 
 *** 
 
-#### Usage
-
-###### Include **animo.js** in your page.
+#### Include **animo.js** in your page.
 
     <script src="../src/animo.js"></script>
 
-###### Create animation template:
+#### Create animation template:
 
     animo.create(<name>, <properties>)
 
@@ -27,7 +25,7 @@
 - bind (example: {bind: {to: ".mainmenu > a", on: "onmouseover"})
 
 
-###### Play the animation
+#### Play the animation
 
     animo.play(<properties>);
 
