@@ -5,7 +5,7 @@
 
 #### Usage
 
-##### Include **animo.js** in your page.
+###### Include **animo.js** in your page.
 
     <script src="../src/animo.js"></script>
 
@@ -37,6 +37,8 @@
 - animation - name of created animation
 - on - if set the animation will be executed as a handler of provided event (example: {on: "onmouseover"})
 
+Instant playing
+
     $(".demo-nav > li > a").mouseover(function() {
         animo.play({
             element: this,
@@ -44,12 +46,26 @@
         });
     });
 
+Playing on event
+
     animo.play({
         element: ".demo-nav > li > a",
         animation: "over",
         on: "onmouseover"
     });
-    
+
+Playing on event, defined in the animation creation
+
+    animo.create("over", {
+        "box-shadow": "0px 0px 20px #5C5C5C",
+        duration: 400,
+        background: "#000",
+        bind: {
+            to: ".navigation > li > a",
+            on: "onmouseover"
+        }
+    })
+
 
 ###### Inspired by
 - [https://github.com/visionmedia/move.js](https://github.com/visionmedia/move.js)
