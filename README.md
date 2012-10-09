@@ -19,7 +19,11 @@ Create animation template:
 
 Play the animation
 
-    animo.play($(".main-menu-link"), "over");
+    animo.play({
+        element: $(".main-menu-link"),
+        animation: "over",
+        on: "onmouseover"
+    });
 
 ##### Inspired by
 - [https://github.com/visionmedia/move.js](https://github.com/visionmedia/move.js)
