@@ -22,9 +22,17 @@ describe("ease > ", function() {
 
     it("should apply", function() {
         run(function(done) {
-            animo.apply("body", "test");
+            animo
+            .create("change", {
+              background: "rgb(196, 200, 137)",
+              duration: 500
+            })
+            .play({
+                element: "body",
+                animation: "change"
+            });
             setTimeout(function() {
-                expect($("body").css("background-color") == "rgb(156, 156, 156)").toBe(true);
+                expect($("body").css("background-color") == "rgb(196, 200, 137)").toBe(true);
                 done();
             }, 1000);
         });

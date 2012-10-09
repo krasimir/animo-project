@@ -1,93 +1,76 @@
 animo = (function() {
 
+    if(typeof Array.prototype.compare == "undefined") {
+        Array.prototype.compare = function(testArr) {
+            if (this.length != testArr.length) return false;
+            for (var i = 0; i < testArr.length; i++) {
+                if (this[i].compare) { 
+                    if (!this[i].compare(testArr[i])) return false;
+                }
+                if (this[i] !== testArr[i]) return false;
+            }
+            return true;
+        }
+    }
+
     var animations = {};
     var animated = [];
     var api = {};
-    var defaultDuration = "1000ms";
-    var defaultEaseMethod = "ease-out-quad";
 
-    var AnimationController = function(element) {
+    var AnimationController = function(elements) {
 
-        var styles = {};
+        // prepare css text
+        var run = function(animation, playOn) {
 
-        // set css text
-        var setStyle = function() {
-            var args = arguments;       
-            if(args.length == 2) {
-                if(args[0] && args[0] != "" && args[1] && args[1] != null) {
-                    styles[args[0]] = args[1];
-                }
-            } else if(args.length == 1) {
-                if(args[0] && args[0] != "") {
-                    var parts = args[0].split(";");
-                    for(var i=0; i<parts.length; i++) {
-                        var styleElements = parts[i].split(":");
-                        var prop = styleElements[0].replace(/ /gi, "");
-                        var value = styleElements[1];
-                        if(prop && prop != "" && value && value != null) {
-                            styles[prop] = value;
-                        }
-                    }
-                }
-            }
-        };
-
-        // apply css
-        var run = function(animation) {
-
-            styles = {};
-            
-            var duration = (animation.duration ? animation.duration + "ms" : defaultDuration);
-            var timingFunction = translateEase(animation.ease || defaultEaseMethod);
-
-            // setStyle(element.style.cssText || element.getAttribute("style"));
-            setStyle("transition: all " + duration + " " + timingFunction);
-            setStyle(animation.css);
-
-            // transform shortcuts            
+            var styles = "";
             var transforms = "";
-            var transformShortcuts = {
-                move: "translate",
-                scale: "scale",
-                rotate: "rotate",
-                rotateX: "rotateX",
-                rotateY: "rotateY",
-                rotateZ: "rotateZ",
-                skew: "skew"
-            };
-            for(var prop in animation) {
-                var shortcut = transformShortcuts[prop];
-                if(typeof shortcut != "undefined") {
-                    transforms += shortcut + "(" + animation[prop] + ") ";
+            var transformProps = ["scale", "translate", "rotate", "skew"].toString();
+            var excludeProps = ["duration", "ease", "scale", "translate", "rotate", "skew"].toString();
+
+            animation.duration = animation.duration || "1000ms";
+            animation.ease = translateEase(animation.ease || "ease-out-quad");
+
+            styles = setVendorStyle("transition", "all " + animation.duration + "ms;");
+            styles += setVendorStyle("transition-timing-function", animation.ease);
+
+            for(var i in animation) {
+                if(transformProps.indexOf(i) >= 0) {
+                    transforms += i + "(" + animation[i] + ") ";
+                } else if(excludeProps.indexOf(i) === -1) {
+                    styles += i + ": " + animation[i] + ";";
                 }
-            }            
+            }
             if(transforms != "") {
-                setStyle("transform", transforms);
+                styles += setVendorStyle("transform", transforms);
             }
-
-            var css = "";
-            var vendors = ["-ms-", "-moz-", "-webkit-", "-o-"];
-            var propertiesToBeVendored = {
-                "transition": true, 
-                "transition-timing-function": true, 
-                "transition-delay": true, 
-                "transform": true
-            };
-            for(var prop in styles) {
-                var value = styles[prop];
-                if(propertiesToBeVendored[prop]) {
-                    css += prop + ":" + value + ";";
-                    for(var i=0; i<vendors.length; i++) {
-                        css += vendors[i] + prop + ":" + value + ";";
-                    }
+            for(var i=0; i<elements.length; i++) {
+                if(typeof playOn != "undefined") {
+                    (function(element) {
+                        element[playOn] = function() {
+                            setStyles(element, styles);
+                        }
+                    })(elements[i]);
                 } else {
-                    css += prop + ":" + value + ";";
+                    setStyles(elements[i], styles);
                 }
             }
-            
-            element.setAttribute("style", css);
-            element.style.cssText = css;
 
+        }
+
+        // apply css text
+        var setStyles = function(element, styles) {
+            element.setAttribute("style", styles);
+            element.style.cssText = styles;
+        }
+
+        // vendors
+        var setVendorStyle = function(prop, value) {
+            var vendors = ["", "-webkit-", "-o-", "-ms-", "-moz-"];
+            var styles = "";
+            for(var i=0; i<vendors.length; i++) {
+                styles += vendors[i] + prop + ":" + value + ";";
+            }
+            return styles;
         }
 
         // ease methods mapping (taken from https://github.com/visionmedia/move.js);
@@ -132,34 +115,37 @@ animo = (function() {
 
     }
 
-    // verify the element
-    var verifyElement = function(selector) {
-        var element = null;
-        if(typeof selector == "undefined" || selector == null) throw new Error("Missing element!");        
+    // get element
+    var select = function(selector) {
+        var elements = null;
+        if(typeof selector == "undefined" || selector == null) throw new Error("Missing options.element!");        
         if(typeof selector == "string") {
             if(typeof $ != "undefined") {
-                element = $(selector);
-                if(element.length == 0) {
+                elements = $(selector);
+                if(elements.length == 0) {
                     throw new Error("Wrong selector!");
                     return;
                 }
-                element = $(selector).get(0);
+                var result = [];
+                for(var i=0; i<elements.length; i++) {
+                    result.push(elements.get(i));
+                }
+                elements = result;
             } else {
-                element = document.getElementById(selector) || document.querySelectorAll(selector)[0];
-                if(typeof element == "undefined") {
+                elements = document.querySelectorAll(selector) || document.getElementById(selector);
+                if(typeof elements == "undefined") {
                     throw new Error("Wrong selector!");
                 }
             }  
         } else if(typeof selector == "object") {
-            if(typeof $ != "undefined" && selector instanceof $) {
-                element = selector.get(0);
-            } else {
-                element = selector;
-            }
+            elements = selector;
         } else {
-            throw new Error("Missing selector!");
+            throw new Error("Select failed!");
         }
-        return element;
+        if(!(elements instanceof Array)) {
+            elements = [elements];
+        }
+        return elements;
     }
 
     // creating animation
@@ -169,30 +155,24 @@ animo = (function() {
     };
 
     // play animations
-    var play = function(selector, name) {
-
-        var element = verifyElement(selector);
-        var animation = animations[name];
-
+    var play = function(options) {
+        var elements = select(options.element);
+        var animation = animations[options.animation];
         if(!animation) {
-            throw new Error("Missing animation with name '" + name + "'!");
-            return;
+            throw new Error("Missing animation with name '" + options.animation + "'. Did you set options.animation?");
         }
-
-        if(element) {
+        if(elements) {
             for(var i=0; i<animated.length; i++){
-                if(animated[i].element == element) {
-                    animated[i].controller.run(animation);
+                if(animated[i].elements.compare(elements)) {
+                    animated[i].controller.run(animation, options.on);
                     return api;
                 }
             }
-            var controller = new AnimationController(element);
-            controller.run(animation);
-            animated.push({ element: element, controller: controller});   
+            var controller = new AnimationController(elements);
+            controller.run(animation, options.on);
+            animated.push({ elements: elements, controller: controller});   
         }
-
         return api;
-
     };
 
     // return current created animations
