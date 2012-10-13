@@ -1,0 +1,108 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="author" content="Krasimir Tsonev" />
+        <meta name="copyright" content="Krasimir Tsonev" />
+        <meta name="robots" content="follow,index" />
+        <meta name="title" content="animo - javascript animation framework" />
+        <meta name="keywords" content="animo - javascript animation framework" lang="en-us" />
+        <meta name="description" content="animo - javascript animation framework" />
+        
+        <title>animo - css3 animations</title>
+
+        <link rel="stylesheet" href="./css/bootstrap.min.css" />
+        <link rel="stylesheet" href="./css/styles.css" />
+        <link rel="stylesheet" href="./css/prettify.css" />
+
+        <script src="./js/jquery.js"></script>
+        <script src="./js/prettify.js"></script>
+        <script src="../src/animo.js"></script>
+        <script src="../src/animo.plugin.popuplize.js"></script>
+        <script>
+            window.onload = function() {
+
+                prettyPrint();
+
+                animo
+                .create("over", {
+                  "box-shadow": "0px 0px 20px #5C5C5C",
+                  duration: 400,
+                  scale: "1.1, 1.1",
+                  rotate: "3deg",
+                  color: "#FF0",
+                  background: "#000",
+                  bind: {
+                    to: ".demo-nav > li > a",
+                    on: "onmouseover"
+                  }
+                })
+                .create("out", {
+                  "box-shadow": "none",
+                  duration: 1400,
+                  scale: "1, 1",
+                  rotate: "0deg",
+                  background: "#DADADA",
+                  color: "#676767",
+                  bind: {
+                    to: ".demo-nav > li > a",
+                    on: "onmouseout"
+                  }
+                });
+
+            }
+
+            var showThePopup = function() {
+              
+            }
+
+        </script>
+        
+    </head>
+<body>
+    <div class="container">
+        <h1>animo</h1>
+        <h4>JavaScript Animation Framework</h4>
+        <hr />
+        <div class="row">
+            <div class="span8">
+              <a href="javascript:showThePopup();" class="btn btn-primary">click here to show the popup</a>
+              <hr />
+<pre class="prettyprint">
+animo
+.create("over", {
+  "box-shadow": "0px 0px 20px #5C5C5C",
+  duration: 400,
+  scale: "1.1, 1.1",
+  rotate: "3deg",
+  color: "#FF0",
+  background: "#000",
+  bind: {
+    to: ".demo-nav > li > a",
+    on: "onmouseover"
+  }
+})
+.create("out", {
+  "box-shadow": "none",
+  duration: 1400,
+  scale: "1, 1",
+  rotate: "0deg",
+  background: "#DADADA",
+  color: "#676767",
+  bind: {
+    to: ".demo-nav > li > a",
+    on: "onmouseout"
+  }
+});
+</pre> 
+            </div>
+            <div class="span4">
+                <ul class="nav demo-nav">
+                    <li><a href="index.html">back to home</a></li>
+                </ul>
+            </div>
+            <a href="#" id="special"></a>
+        </div>
+    </div>
+</body>
+</html>

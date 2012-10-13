@@ -23,56 +23,94 @@
 
                 prettyPrint();
 
-                animo
-                .create("over", {
-                  "box-shadow": "0px 0px 20px #5C5C5C",
-                  duration: 400,
-                  scale: "1.1, 1.1",
-                  rotate: "3deg",
-                  color: "#FF0",
-                  background: "#000",
-                  bind: {
-                    to: ".demo-nav > li > a",
-                    on: "onmouseover"
-                  }
-                })
-                .create("out", {
-                  "box-shadow": "none",
-                  duration: 1400,
-                  scale: "1, 1",
-                  rotate: "0deg",
-                  background: "#DADADA",
-                  color: "#676767",
-                  bind: {
-                    to: ".demo-nav > li > a",
-                    on: "onmouseout"
-                  }
-                });
-
+                // ***********************************************************************
                 // animo
-                // .play({
-                //     element: ".demo-nav > li > a",
-                //     animation: "over",
-                //     on: "onmouseover"
+                // .create("over", {
+                //   "box-shadow": "0px 0px 20px #5C5C5C",
+                //   duration: 400,
+                //   scale: "1.1, 1.1",
+                //   rotate: "3deg",
+                //   color: "#FF0",
+                //   background: "#000",
+                //   bind: {
+                //     to: ".demo-nav > li > a",
+                //     on: "mouseover"
+                //   }
                 // })
-                // .play({
-                //     element: ".demo-nav > li > a",
-                //     animation: "out",
-                //     on: "onmouseout"
+                // .create("out", {
+                //   "box-shadow": "none",
+                //   duration: 1400,
+                //   scale: "1, 1",
+                //   rotate: "0deg",
+                //   background: "#DADADA",
+                //   color: "#676767",
+                //   bind: {
+                //     to: ".demo-nav > li > a",
+                //     on: "mouseout"
+                //   }
                 // });
 
-                $(".demo-nav > li > a")
-                .mouseover(function() {
-                    animo.play({
-                        element: this,
-                        animation: "over"
-                    });
+                // ***********************************************************************
+                // animo
+                // .create("over", {
+                //     "box-shadow": "0px 0px 20px #5C5C5C",
+                //     duration: 400,
+                //     scale: "1.1, 1.1",
+                //     rotate: "3deg",
+                //     color: "#FF0",
+                //     background: "#000"
+                // })
+                // .create("out", {
+                //     "box-shadow": "none",
+                //     duration: 1400,
+                //     scale: "1, 1",
+                //     rotate: "0deg",
+                //     background: "#DADADA",
+                //     color: "#676767"
+                // });
+
+                // $(".demo-nav > li > a").mouseover(function() {
+                //     animo.play({
+                //         element: this,
+                //         animation: "over"
+                //     });
+                // });
+                // $(".demo-nav > li > a").mouseout(function() {
+                //     animo.play({
+                //         element: this,
+                //         animation: "out"
+                //     });
+                // });
+
+                // ***********************************************************************
+                animo
+                .create("over", {
+                    "box-shadow": "0px 0px 20px #5C5C5C",
+                    duration: 400,
+                    scale: "1.1, 1.1",
+                    rotate: "3deg",
+                    color: "#FF0",
+                    background: "#000"
                 })
-                .mouseout(function() {
-                    animo.play({
-                        element: this,
-                        animation: "out"
-                    });
+                .create("out", {
+                    "box-shadow": "none",
+                    duration: 1400,
+                    scale: "1, 1",
+                    rotate: "0deg",
+                    background: "#DADADA",
+                    color: "#676767"
+                });
+
+                animo
+                .play({
+                    element: ".demo-nav > li > a",
+                    animation: "over",
+                    on: "mouseover"
+                })
+                .play({
+                    element: ".demo-nav > li > a",
+                    animation: "out",
+                    on: "mouseout"
                 });
 
             }
@@ -97,7 +135,7 @@ animo
   background: "#000",
   bind: {
     to: ".demo-nav > li > a",
-    on: "onmouseover"
+    on: "mouseover"
   }
 })
 .create("out", {
@@ -109,14 +147,14 @@ animo
   color: "#676767",
   bind: {
     to: ".demo-nav > li > a",
-    on: "onmouseout"
+    on: "mouseout"
   }
 });
 </pre> 
             </div>
             <div class="span4">
                 <ul class="nav demo-nav">
-                    <li><a href="#">Lorem ipsum dolor</a></li>
+                    <li><a href="plugin.popuplize.html">plugin.popuplize</a></li>
                     <li><a href="#">Sit amet</a></li>
                     <li><a href="#">Consectetuer</a></li>
                     <li><a href="#">Adipiscing elit</a></li>

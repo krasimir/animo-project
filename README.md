@@ -3,9 +3,16 @@
 
 *** 
 
-#### Include **animo.js** in your page.
+#### Dependencies
 
-    <script src="../src/animo.js"></script>
+[http://jquery.com/](jQuery)
+
+#### Usage
+
+Include **animo.js** and **jQuery** in your page.
+
+    <script src="jquery.js"></script>
+    <script src="animo.js"></script>
 
 #### Create animation template:
 
@@ -31,7 +38,7 @@
 
 **properties:**
 
-- element - string selector, jQuery object or DOM object
+- element - string selector or jQuery object
 - animation - name of created animation
 - on - if set the animation will be executed as a handler of provided event (example: {on: "onmouseover"})
 
@@ -49,7 +56,7 @@ Playing on event
     animo.play({
         element: ".demo-nav > li > a",
         animation: "over",
-        on: "onmouseover"
+        on: "mouseover"
     });
 
 Playing on event, defined in the animation creation
@@ -60,7 +67,7 @@ Playing on event, defined in the animation creation
         background: "#000",
         bind: {
             to: ".navigation > li > a",
-            on: "onmouseover"
+            on: "mouseover"
         }
     })
 

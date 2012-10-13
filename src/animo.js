@@ -1,18 +1,5 @@
 animo = (function() {
 
-    if(typeof Array.prototype.compare == "undefined") {
-        Array.prototype.compare = function(testArr) {
-            if (this.length != testArr.length) return false;
-            for (var i = 0; i < testArr.length; i++) {
-                if (this[i].compare) { 
-                    if (!this[i].compare(testArr[i])) return false;
-                }
-                if (this[i] !== testArr[i]) return false;
-            }
-            return true;
-        }
-    }
-
     var animations = {};
     var animated = [];
     var api = {};
@@ -43,21 +30,15 @@ animo = (function() {
             for(var i=0; i<elements.length; i++) {
                 if(typeof playOn != "undefined") {
                     (function(element) {
-                        element[playOn] = function() {
-                            setStyles(element, styles);
-                        }
-                    })(elements[i]);
+                        element[playOn](function() {
+                            element.attr("style", styles);
+                        });
+                    })(elements.eq(i));
                 } else {
-                    setStyles(elements[i], styles);
+                    elements.eq(i).attr("style", styles);
                 }
             }
 
-        }
-
-        // apply css text
-        var setStyles = function(element, styles) {
-            element.setAttribute("style", styles);
-            element.style.cssText = styles;
         }
 
         // vendors
@@ -71,42 +52,10 @@ animo = (function() {
         }
 
         return {
-            run: run
+            run: run,
+            elements: elements
         }        
 
-    }
-
-    // get element
-    var select = function(selector) {
-        var elements = null;
-        if(typeof selector == "undefined" || selector == null) throw new Error("Missing options.element!");        
-        if(typeof selector == "string") {
-            if(typeof $ != "undefined") {
-                elements = $(selector);
-                if(elements.length == 0) {
-                    throw new Error("Wrong selector!");
-                    return;
-                }
-                var result = [];
-                for(var i=0; i<elements.length; i++) {
-                    result.push(elements.get(i));
-                }
-                elements = result;
-            } else {
-                elements = document.querySelectorAll(selector) || document.getElementById(selector);
-                if(typeof elements == "undefined") {
-                    throw new Error("Wrong selector!");
-                }
-            }  
-        } else if(typeof selector == "object") {
-            elements = selector;
-        } else {
-            throw new Error("Select failed!");
-        }
-        if(!(elements instanceof Array)) {
-            elements = [elements];
-        }
-        return elements;
     }
 
     // creating animation
@@ -124,22 +73,25 @@ animo = (function() {
 
     // play animations
     var play = function(options) {
-        var elements = select(options.element);
+        var elements = $(options.element);
+        if(elements.length == 0) {
+            throw new Error("Wrong selector or object!");
+        }
         var animation = animations[options.animation];
         if(!animation) {
             throw new Error("Missing animation with name '" + options.animation + "'. Did you set options.animation?");
         }
-        if(elements) {
-            for(var i=0; i<animated.length; i++){
-                if(animated[i].elements.compare(elements)) {
-                    animated[i].controller.run(animation, options.on);
-                    return api;
-                }
+        for(var i=0; i<animated.length; i++){
+            var e1 = animated[i].controller.elements;
+            var e2 = elements;
+            if(e1.length === e2.length && e1.length === e1.filter(e2).length) {
+                animated[i].controller.run(animation, options.on);
+                return api;
             }
-            var controller = new AnimationController(elements);
-            controller.run(animation, options.on);
-            animated.push({ elements: elements, controller: controller});   
         }
+        var controller = new AnimationController(elements);
+        controller.run(animation, options.on);
+        animated.push({controller: controller});
         return api;
     };
 
