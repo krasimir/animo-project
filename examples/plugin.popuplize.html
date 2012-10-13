@@ -34,7 +34,7 @@
                   background: "#000",
                   bind: {
                     to: ".demo-nav > li > a",
-                    on: "onmouseover"
+                    on: "mouseover"
                   }
                 })
                 .create("out", {
@@ -46,14 +46,17 @@
                   color: "#676767",
                   bind: {
                     to: ".demo-nav > li > a",
-                    on: "onmouseout"
+                    on: "mouseout"
                   }
                 });
 
             }
 
             var showThePopup = function() {
-              
+                animo.popuplize.show("#info-popup");
+            }
+            var hideDialog = function() {
+                animo.popuplize.hide("#info-popup");   
             }
 
         </script>
@@ -103,6 +106,13 @@ animo
             </div>
             <a href="#" id="special"></a>
         </div>
+    </div>
+    <div class="dialog" id="info-popup">
+        <p>Animo popup</p>
+        <hr />
+        <p>Small JavaScript library for CSS3 animations</p>
+        <hr />
+        <a href="javascript:hideDialog();" class="btn">close</a>
     </div>
 </body>
 </html>

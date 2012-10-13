@@ -30,6 +30,7 @@ Include **animo.js** and **jQuery** in your page.
 - skew (example: {skew: "10deg, 60deg"})
 - ease (example: {ease: "cubic-bezier(0,1.23,.87,.02)"})
 - bind (example: {bind: {to: ".mainmenu > a", on: "onmouseover"})
+- skipAnimation - if it is **true** the css styles are applied without setting the transition properties, which means that there is no animation, just direct styling
 
 
 #### Play the animation
@@ -41,6 +42,7 @@ Include **animo.js** and **jQuery** in your page.
 - element - string selector or jQuery object
 - animation - name of created animation
 - on - if set the animation will be executed as a handler of provided event (example: {on: "onmouseover"})
+- callback - it is called once the animation ends
 
 Instant playing
 

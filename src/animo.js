@@ -3,6 +3,7 @@ animo = (function() {
     var animations = {};
     var animated = [];
     var api = {};
+    var defaultDuration = 1000;
 
     var AnimationController = function(elements) {
 
@@ -12,10 +13,12 @@ animo = (function() {
             var styles = "";
             var transforms = "";
             var transformProps = "scale, translate, rotate, skew";
-            var excludeProps = "duration, ease, scale, translate, rotate, skew, bind";
+            var excludeProps = "duration, ease, scale, translate, rotate, skew, bind, skipAnimation";
 
-            styles += setVendorStyle("transition-duration", animation.duration ? animation.duration + "ms" : "1000ms");
-            styles += setVendorStyle("transition-timing-function", animation.ease || "ease-out");
+            if(!animation.skipAnimation) {
+                styles += setVendorStyle("transition-duration", animation.duration ? animation.duration + "ms" : defaultDuration + "ms");
+                styles += setVendorStyle("transition-timing-function", animation.ease || "ease-out");
+            }
 
             for(var i in animation) {
                 if(transformProps.indexOf(i) >= 0) {
@@ -73,13 +76,16 @@ animo = (function() {
 
     // play animations
     var play = function(options) {
-        var elements = $(options.element);
+        var elements = typeof options.element == "string" ? $(options.element) : options.element;
         if(elements.length == 0) {
             throw new Error("Wrong selector or object!");
         }
         var animation = animations[options.animation];
         if(!animation) {
             throw new Error("Missing animation with name '" + options.animation + "'. Did you set options.animation?");
+        }
+        if(options.callback) {
+            setTimeout(options.callback, animation.duration || defaultDuration)
         }
         for(var i=0; i<animated.length; i++){
             var e1 = animated[i].controller.elements;
