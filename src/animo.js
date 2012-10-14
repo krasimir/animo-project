@@ -13,11 +13,18 @@ animo = (function() {
             var styles = "";
             var transforms = "";
             var transformProps = "scale, translate, rotate, skew";
-            var excludeProps = "duration, ease, scale, translate, rotate, skew, bind, skipAnimation";
+            var excludeProps = "duration, ease, scale, translate, rotate, skew, bind, skipAnimation, delay";
 
             if(!animation.skipAnimation) {
                 styles += setVendorStyle("transition-duration", animation.duration ? animation.duration + "ms" : defaultDuration + "ms");
                 styles += setVendorStyle("transition-timing-function", animation.ease || "ease-out");
+                if(animation.delay) {
+                    styles += setVendorStyle("transition-delay", animation.delay + "ms");
+                }
+            }
+
+            if(animation.filter) {
+                styles += setVendorStyle("filter", animation.filter);
             }
 
             for(var i in animation) {
@@ -29,6 +36,7 @@ animo = (function() {
             }
             if(transforms != "") {
                 styles += setVendorStyle("transform", transforms);
+                styles += setVendorStyle("transform-origin", "50%, 50%");
             }
             for(var i=0; i<elements.length; i++) {
                 if(typeof playOn != "undefined") {
@@ -85,7 +93,7 @@ animo = (function() {
             throw new Error("Missing animation with name '" + options.animation + "'. Did you set options.animation?");
         }
         if(options.callback) {
-            setTimeout(options.callback, animation.duration || defaultDuration)
+            setTimeout(options.callback, (animation.duration || defaultDuration) + 50);
         }
         for(var i=0; i<animated.length; i++){
             var e1 = animated[i].controller.elements;

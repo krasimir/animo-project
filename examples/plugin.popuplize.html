@@ -50,19 +50,23 @@
                   }
                 });
 
+                animo.popuplize.content(".container");
+                animo.popuplize.useCover = true;
+
             }
 
             var showThePopup = function() {
                 animo.popuplize.show("#info-popup");
             }
             var hideDialog = function() {
-                animo.popuplize.hide("#info-popup");   
+                animo.popuplize.hide("#info-popup");
             }
 
         </script>
         
     </head>
 <body>
+
     <div class="container">
         <h1>animo</h1>
         <h4>JavaScript Animation Framework</h4>
@@ -71,33 +75,46 @@
             <div class="span8">
               <a href="javascript:showThePopup();" class="btn btn-primary">click here to show the popup</a>
               <hr />
+
+<h4>CSS</h4>
 <pre class="prettyprint">
-animo
-.create("over", {
-  "box-shadow": "0px 0px 20px #5C5C5C",
-  duration: 400,
-  scale: "1.1, 1.1",
-  rotate: "3deg",
-  color: "#FF0",
-  background: "#000",
-  bind: {
-    to: ".demo-nav > li > a",
-    on: "onmouseover"
-  }
-})
-.create("out", {
-  "box-shadow": "none",
-  duration: 1400,
-  scale: "1, 1",
-  rotate: "0deg",
-  background: "#DADADA",
-  color: "#676767",
-  bind: {
-    to: ".demo-nav > li > a",
-    on: "onmouseout"
-  }
-});
-</pre> 
+.dialog {
+    display: none;
+    width: 400px;
+    padding: 20px;
+    box-shadow: 0px 0px 20px #5C5C5C;
+    background: #FFF;
+}
+</pre>
+
+<h4>Markup</h4>
+<pre class="prettyprint">
+&lt;div class="content">...&lt;/div>
+&lt;div class="dialog" id="info-popup">
+    &lt;p>Animo popup&lt;/p>
+    &lt;hr />
+    &lt;p>Small JavaScript library for CSS3 animations&lt;/p>
+    &lt;hr />
+    &lt;a href="javascript:hideDialog();" class="btn">close&lt;/a>
+&lt;/div>
+</pre>
+
+<h4>Setting content container</h4>
+<pre class="prettyprint">
+animo.popuplize.content(".content");
+animo.popuplize.useCover = true; // true by default
+</pre>
+
+<h4>Showing the popup</h4>
+<pre class="prettyprint">
+animo.popuplize.show("#info-popup");
+</pre>
+
+<h4>Hiding the popup</h4>
+<pre class="prettyprint">
+animo.popuplize.hide("#info-popup");
+</pre>
+
             </div>
             <div class="span4">
                 <ul class="nav demo-nav">
@@ -107,6 +124,7 @@ animo
             <a href="#" id="special"></a>
         </div>
     </div>
+
     <div class="dialog" id="info-popup">
         <p>Animo popup</p>
         <hr />
@@ -114,5 +132,6 @@ animo
         <hr />
         <a href="javascript:hideDialog();" class="btn">close</a>
     </div>
+
 </body>
 </html>

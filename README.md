@@ -9,7 +9,7 @@
 
 #### Usage
 
-Include **animo.js** and **jQuery** in your page.
+Include **jQuery** and **animo.js** in your page.
 
     <script src="jquery.js"></script>
     <script src="animo.js"></script>
@@ -31,6 +31,7 @@ Include **animo.js** and **jQuery** in your page.
 - ease (example: {ease: "cubic-bezier(0,1.23,.87,.02)"})
 - bind (example: {bind: {to: ".mainmenu > a", on: "onmouseover"})
 - skipAnimation - if it is **true** the css styles are applied without setting the transition properties, which means that there is no animation, just direct styling
+- delay (example: {delay: 300})
 
 
 #### Play the animation
@@ -72,6 +73,62 @@ Playing on event, defined in the animation creation
             on: "mouseover"
         }
     })
+
+# Plugins
+
+***
+
+### Popuplize
+
+The plugin allows creation of popups. 
+
+#### Usage
+
+Include **jQuery**, **animo.js** and **animo.plugin.popuplize.js** in your page.
+
+    <script src="jquery.js"></script>
+    <script src="animo.js"></script>
+    <script src="animo.plugin.popuplize.js"></script>
+
+Your dialog should be hidden
+    
+    <style type="text/css">
+        .dialog {
+            display: none; /* only this style is required */
+            width: 400px;
+            padding: 20px;
+            box-shadow: 0px 0px 20px #5C5C5C;
+            background: #FFF;
+        }
+    </style>
+    ...
+    <div class="dialog" id="info-popup"> ... dialog content ... </div>
+
+Define the main content holder
+
+    animo.popuplize.content(".container");
+
+Decide if you want to use overlay or not
+
+    animo.popuplize.useCover = true; // true by default
+
+Showing the popup
+
+    animo.popuplize.show("#info-popup");
+
+You can also supply a jquery object. It is not necessary to have the object in DOM. If it is not added animo will do that for you.
+
+    var popup = $('<div class="dialog"> ... dialog content ... </div>');
+    animo.popuplize.show(popup);
+
+Hide the popup
+
+    animo.popuplize.hide("#info-popup");
+
+or 
+
+    var popup = $('<div class="dialog"> ... dialog content ... </div>');
+    animo.popuplize.hide(popup);
 
 
 ###### Inspired by
