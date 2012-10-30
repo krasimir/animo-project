@@ -58,8 +58,17 @@
             var showThePopup = function() {
                 animo.popuplize.show("#info-popup");
             }
-            var hideDialog = function() {
-                animo.popuplize.hide("#info-popup");
+            var hideDialog = function(type) {
+                switch(type) {
+                  case 0: animo.popuplize.hide("#info-popup"); break;
+                  case 1: animo.popuplize.hide("#info-popup", true); break;
+                  case 2: 
+                    animo.popuplize.hide("#info-popup", function() {
+                      alert("poup closed");
+                    });
+                  break;
+                }
+                
             }
 
         </script>
@@ -130,7 +139,11 @@ animo.popuplize.hide("#info-popup");
         <hr />
         <p>Small JavaScript library for CSS3 animations</p>
         <hr />
-        <a href="javascript:hideDialog();" class="btn">close</a>
+        <a href="javascript:hideDialog(0);" class="btn">close</a>
+        <hr />
+        <a href="javascript:hideDialog(1);" class="btn">close and remove from DOM</a>
+        <hr />
+        <a href="javascript:hideDialog(2);" class="btn">close with callback</a>
     </div>
 
 </body>

@@ -62,7 +62,7 @@
             cover.show();
             return api;
         };
-        var hide = function(element, removeFromDOM) {
+        var hide = function(element, removeFromDOMOrCallback) {
             element = verifyElement(element);
             defineAnimations(element);
             animo.play({
@@ -74,8 +74,11 @@
                         animation: "dialog.hideEnds",
                         element: element
                     });
-                    if(removeFromDOM) {
-                        element.detach();
+                    if(removeFromDOMOrCallback) {
+                        if(typeof removeFromDOMOrCallback === "boolean")
+                            element.detach();
+                        else if(typeof removeFromDOMOrCallback === "function")
+                            removeFromDOMOrCallback();
                     }
                 }
             });

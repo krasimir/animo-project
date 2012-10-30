@@ -124,6 +124,8 @@ You can also supply a jquery object. It is not necessary to have the object in D
 Hide the popup
 
     animo.popuplize.hide("#info-popup");
+    animo.popuplize.hide("#info-popup", true); // hide the popup and remove it from DOM
+    animo.popuplize.hide("#info-popup", function() { ... }); // hide the popup, keep it in DOM and call a callback function
 
 or 
 
