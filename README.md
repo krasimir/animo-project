@@ -26,7 +26,7 @@ Include **jQuery** and **animo.js** in your page.
 - duration (example: {duration: "1500ms"})
 - scale (example: {scale: "1.2, 1.2"})
 - rotate (example: {rotate: "120deg"})
-- translate (example: {rotate: "100px, 200px"})
+- translate (example: {translate: "100px, 200px"})
 - skew (example: {skew: "10deg, 60deg"})
 - ease (example: {ease: "cubic-bezier(0,1.23,.87,.02)"})
 - bind (example: {bind: {to: ".mainmenu > a", on: "onmouseover"})
