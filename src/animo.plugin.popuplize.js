@@ -27,7 +27,7 @@
             var outerHeight = element.outerHeight();
             var positionProps = function() {
                 return {
-                    position: "absolute",
+                    position: "fixed",
                     top: "50%",
                     left: "50%",
                     "margin-left": (- outerWidth / 2) + "px",
@@ -129,7 +129,7 @@
                     this.element.insertBefore(popupElement);
                 }
                 if(this.element) {
-                    this.element.attr("style", "position: absolute; width: 100%; height: 100%; top: 0; left: 0; opacity: 0.5; background: #000; display: block;" );   
+                    this.element.attr("style", "position: fixed; width: 100%; height: 100%; top: 0; left: 0; opacity: 0.5; background: #000; display: block;" );   
                 }  
             },
             hide: function() {
